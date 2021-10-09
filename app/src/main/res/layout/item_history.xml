@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.example.qrcode.common.utils.DateConverter" />
+
+        <variable
+            name="history"
+            type="com.example.qrcode.model.entity.History" />
+    </data>
+
+    <com.daimajia.swipe.SwipeLayout
+        android:id="@+id/swipeLayoutHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnShare"
+                android:layout_width="@dimen/delete_project_button_width"
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="true"
+                android:background="@color/divider_color_dialog"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:text="@string/share"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:visibility="visible" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnDelete"
+                android:layout_width="@dimen/delete_project_button_width"
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="true"
+                android:background="@color/red"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:text="@string/delete"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:visibility="visible" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/ivHistory"
+                android:layout_width="@dimen/image_qr_code_size"
+                android:layout_height="@dimen/image_qr_code_size"
+                android:layout_margin="@dimen/margin_small"
+                android:src="@drawable/ic_qr_code"
+                app:tint="@color/black" />
+
+            <TextView
+                android:id="@+id/tvHistory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|start"
+                android:maxHeight="@dimen/image_qr_code_size"
+                android:text="@{history.qrCode +'\n'+ String.valueOf(DateConverter.toDate(history.createDate))}"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_regular"
+                tools:text="180 photos" />
+
+        </LinearLayout>
+    </com.daimajia.swipe.SwipeLayout>
+</layout>

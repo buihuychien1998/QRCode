@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical"
+        tools:context=".presentation.ui.main.qrcode.QRCodeFragment">
+
+        <FrameLayout
+            android:id="@+id/toolBarGallery"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+
+            <ImageButton
+                android:id="@+id/btnBackQRCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/margin_small"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="@dimen/padding_small"
+                android:src="@drawable/ic_back"
+                app:tint="@color/color_icon" />
+
+            <TextView
+                android:id="@+id/tvTitleQRCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/app_name"
+                android:textColor="@color/color_icon"
+                android:textSize="@dimen/text_size_extra" />
+
+            <TextView
+                android:textSize="@dimen/text_size_regular"
+                android:id="@+id/tvCreateTool"
+                android:layout_marginHorizontal="@dimen/margin_small"
+                android:layout_gravity="center_vertical|end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_tv_create_tool"
+                android:drawablePadding="@dimen/padding_small"
+                android:paddingHorizontal="@dimen/padding_medium"
+                android:paddingVertical="@dimen/padding_tiny"
+                android:text="@string/create"
+                android:gravity="center"
+                android:backgroundTint="@color/color_icon"
+                android:textColor="@color/white"
+                app:drawableStartCompat="@drawable/ic_create"
+                app:drawableTint="@color/white" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/lnlNoQRCode"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/no_history_image_size"
+                    android:layout_height="@dimen/no_history_image_size"
+                    android:src="@drawable/ic_qr_code"
+                    app:tint="@color/color_text" />
+
+                <TextView
+                    android:textStyle="bold"
+                    android:textSize="@dimen/text_size_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:text="@string/not_found_message"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:textSize="@dimen/text_size_regular"
+                    android:id="@+id/tvCreate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:background="@drawable/bg_tv_create"
+                    android:drawablePadding="@dimen/padding_small"
+                    android:paddingHorizontal="@dimen/padding_medium"
+                    android:paddingVertical="@dimen/padding_tiny"
+                    android:text="@string/create"
+                    android:gravity="center"
+                    android:textColor="@color/color_text"
+                    app:drawableStartCompat="@drawable/ic_create"
+                    app:drawableTint="@color/color_text" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_qr_code"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        </FrameLayout>
+
+    </LinearLayout>
+</layout>

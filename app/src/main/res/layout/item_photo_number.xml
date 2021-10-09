@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="total"
+            type="int" />
+    </data>
+
+    <TextView
+        android:id="@+id/tvTotalPhotos"
+        tools:text="180 photos"
+        android:text="@{String.format(@string/photos_count, total)}"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_small"
+        android:gravity="center"
+        android:textSize="@dimen/text_size_small"
+        android:textColor="@color/color_icon"/>
+</layout>

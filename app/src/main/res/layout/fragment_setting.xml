@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical"
+        tools:context=".presentation.ui.main.setting.SettingFragment">
+
+        <FrameLayout
+            android:id="@+id/toolBarGallery"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+
+            <ImageButton
+                android:id="@+id/btnBackSetting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/margin_small"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="@dimen/padding_small"
+                android:src="@drawable/ic_back"
+                app:tint="@color/color_icon" />
+
+            <TextView
+                android:id="@+id/tvTitleSetting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/title_setting"
+                android:textColor="@color/color_icon"
+                android:textSize="@dimen/text_size_extra" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_medium"
+                android:gravity="center_vertical"
+                android:text="@string/text_sound"
+                android:textColor="@color/black"
+                app:drawableStartCompat="@drawable/ic_sound" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/swSound"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:paddingHorizontal="@dimen/padding_medium"
+                android:textSize="@dimen/text_size_regular"
+                android:thumb="@drawable/custom_thumb"
+                app:track="@drawable/custom_track" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_medium"
+                android:gravity="center_vertical"
+                android:text="@string/text_vibrate"
+                android:textColor="@color/black"
+                app:drawableStartCompat="@drawable/ic_vibrate" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/swVibrate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:paddingHorizontal="@dimen/padding_medium"
+                android:textSize="@dimen/text_size_regular"
+                android:thumb="@drawable/custom_thumb"
+                app:track="@drawable/custom_track" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_medium"
+                android:gravity="center_vertical"
+                android:text="@string/text_save_history"
+                android:textColor="@color/black"
+                app:drawableStartCompat="@drawable/ic_save_history" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/swSaveHistory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:paddingHorizontal="@dimen/padding_medium"
+                android:textSize="@dimen/text_size_regular"
+                android:thumb="@drawable/custom_thumb"
+                app:track="@drawable/custom_track" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_medium"
+                android:gravity="center_vertical"
+                android:text="@string/text_remove_ads"
+                android:textColor="@color/black"
+                app:drawableStartCompat="@drawable/ic_remove_ads" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/swRemoveAds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:paddingHorizontal="@dimen/padding_medium"
+                android:textSize="@dimen/text_size_regular"
+                android:thumb="@drawable/custom_thumb"
+                app:track="@drawable/custom_track" />
+        </FrameLayout>
+    </LinearLayout>
+</layout>

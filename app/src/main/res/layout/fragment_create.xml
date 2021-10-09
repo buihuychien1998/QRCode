@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical"
+        tools:context=".presentation.ui.main.create.CreateFragment">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+
+            <ImageButton
+                android:id="@+id/btnBackCreate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/margin_small"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="@dimen/padding_small"
+                android:src="@drawable/ic_back"
+                app:tint="@color/color_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/create"
+                android:textColor="@color/color_icon"
+                android:textSize="@dimen/text_size_extra" />
+
+            <ImageButton
+                android:id="@+id/btnSaveQRCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginEnd="@dimen/margin_small"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="@dimen/padding_small"
+                android:src="@drawable/ic_save"
+                app:tint="@color/color_icon" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tvText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_extra"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:text="@string/enter_text" />
+
+        <EditText
+            android:id="@+id/edtText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLength="255"
+            android:layout_marginHorizontal="@dimen/margin_extra"
+            android:layout_marginTop="@dimen/margin_small"
+            android:inputType="textMultiLine" />
+
+        <TextView
+            android:id="@+id/tvCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_extra"
+            android:text="@string/default_counter_text"/>
+
+    </LinearLayout>
+</layout>
