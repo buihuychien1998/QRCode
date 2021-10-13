@@ -15,7 +15,7 @@ android {
     buildToolsVersion "31.0.0"
 
     defaultConfig {
-        applicationId "com.example.qrcode"
+        applicationId "com.store.qrcode"
         minSdkVersion 21
         targetSdkVersion 31
         versionCode 1

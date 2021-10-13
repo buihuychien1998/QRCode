@@ -5,11 +5,11 @@
 
     <data>
 
-        <import type="com.example.qrcode.common.utils.DateConverter" />
+        <import type="com.store.qrcode.common.utils.DateConverter" />
 
         <variable
             name="history"
-            type="com.example.qrcode.model.entity.History" />
+            type="com.store.qrcode.model.entity.History" />
     </data>
 
     <com.daimajia.swipe.SwipeLayout

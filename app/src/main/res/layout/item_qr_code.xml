@@ -6,7 +6,7 @@
 
         <variable
             name="item"
-            type="com.example.qrcode.model.entity.Barcode" />
+            type="com.store.qrcode.model.entity.Barcode" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

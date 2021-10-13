@@ -9,7 +9,7 @@
         tools:context=".presentation.ui.main.MainActivity">
 
         <androidx.fragment.app.FragmentContainerView
-            android:name="com.example.qrcode.presentation.ui.main.scan.ScanFragment"
+            android:name="com.store.qrcode.presentation.ui.main.scan.ScanFragment"
             android:id="@+id/qrFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

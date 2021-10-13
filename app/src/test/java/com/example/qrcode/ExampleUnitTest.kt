@@ -1,4 +1,4 @@
-package com.example.qrcode
+package com.store.qrcode
 
 import org.junit.Test
 

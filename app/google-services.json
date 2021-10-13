@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:599782167240:android:b63b833859c4f5f9724bfd",
         "android_client_info": {
-          "package_name": "com.example.qrcode"
+          "package_name": "com.store.qrcode"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "599782167240-6ecicrn85us605cvs26v4hv6regqt4fo.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.qrcode",
+            "package_name": "com.store.qrcode",
             "certificate_hash": "bc2dd8100ce79728aaff260785734e64259c882a"
           }
         },
