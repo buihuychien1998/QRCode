@@ -1,6 +1,7 @@
 package com.example.qrcode.presentation.base
 
 import android.content.Context
+import android.content.ContextWrapper
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -15,7 +16,14 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.qrcode.R
+import com.example.qrcode.common.LANGUAGE
+import com.example.qrcode.common.SHARED_PREFERENCE_LANGUAGE
+import com.example.qrcode.common.utils.ContextUtils
 import com.example.qrcode.common.utils.DialogUtils
+import com.example.qrcode.common.utils.Languages
+import com.example.qrcode.common.utils.changeLanguage
+import com.example.qrcode.datastore.PrefsStore
+import java.util.*
 
 
 abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> :
@@ -25,6 +33,8 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> :
     protected lateinit var sharedViewModel: SharedViewModel
     abstract fun initViewModel()
     abstract val layoutId: Int
+
+    lateinit var prefsStore: PrefsStore
 
     /**
      * Initialize views
@@ -38,6 +48,27 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> :
      * Initialize listeners
      */
     abstract fun initListeners()
+    override fun attachBaseContext(newBase: Context) {
+        // get chosen language from shread preference
+//        prefsStore = DataStoreHelper(newBase)
+//        val lang = runBlocking(Dispatchers.IO) {
+//            prefsStore.getLanguage().first()
+//        }
+        val mSp = newBase.getSharedPreferences(SHARED_PREFERENCE_LANGUAGE, MODE_PRIVATE)
+        val lang = mSp?.getString(LANGUAGE, Languages.DEFAULT) ?:  Languages.DEFAULT
+        val localeToSwitchTo = Locale(lang)
+        val localeUpdatedContext: ContextWrapper =
+            ContextUtils.updateLocale(newBase, localeToSwitchTo)
+        super.attachBaseContext(localeUpdatedContext)
+    }
+
+    override fun recreate() {
+        super.recreate()
+        val mSp = getSharedPreferences(SHARED_PREFERENCE_LANGUAGE, MODE_PRIVATE)
+        val lang = mSp?.getString(LANGUAGE, Languages.DEFAULT) ?:  Languages.DEFAULT
+        this.changeLanguage(lang)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewBinding = DataBindingUtil.setContentView<DB>(this, layoutId)
@@ -121,11 +152,11 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel> :
         DialogUtils.dismissProgressDialog()
     }
 
-    fun showToast(message: String){
+    fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    fun showToast(@StringRes resId: Int){
+    fun showToast(@StringRes resId: Int) {
         Toast.makeText(this, resId, Toast.LENGTH_SHORT).show()
     }
 

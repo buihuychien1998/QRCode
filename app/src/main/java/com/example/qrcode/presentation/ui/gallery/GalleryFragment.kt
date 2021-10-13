@@ -1,7 +1,6 @@
 package com.example.qrcode.presentation.ui.gallery
 
 import android.Manifest
-import android.content.Intent
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
@@ -15,7 +14,6 @@ import com.example.qrcode.common.widget.SpacesItemDecoration
 import com.example.qrcode.databinding.FragmentGalleryBinding
 import com.example.qrcode.presentation.base.BaseFragment
 import com.example.qrcode.presentation.ui.main.MainActivity
-import com.example.qrcode.presentation.ui.main.history.HistoryFragment
 import com.tbruyelle.rxpermissions3.RxPermissions
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -44,7 +42,6 @@ class GalleryFragment : BaseFragment<FragmentGalleryBinding, GalleryViewModel>()
     override fun initViews() {
         initGallery()
         handlePermissions()
-
         handleOnBackPress()
     }
 
@@ -76,11 +73,11 @@ class GalleryFragment : BaseFragment<FragmentGalleryBinding, GalleryViewModel>()
     private fun handlePermissions() {
         val rxPermissions = RxPermissions(this)
         rxPermissions
-            .requestEach(
+            .requestEachCombined(
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
             )
-            .subscribe { permission ->  // will emit 2 Permission objects
+            .subscribe { permission ->  // will emit 2 Permission objects if using requestEach
                 when {
                     permission.granted -> {
                         // `permission.name` is granted !
@@ -89,7 +86,7 @@ class GalleryFragment : BaseFragment<FragmentGalleryBinding, GalleryViewModel>()
                     permission.shouldShowRequestPermissionRationale -> {
                         // Denied permission without ask never again
                         showToast(R.string.permission_not_enough_message)
-                        requireActivity().finish()
+                        handleBackEvent()
                     }
                     else -> {
                         // Denied permission with ask never again

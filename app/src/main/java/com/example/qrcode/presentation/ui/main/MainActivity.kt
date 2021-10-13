@@ -1,11 +1,8 @@
 package com.example.qrcode.presentation.ui.main
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.lifecycle.Observer
 import com.example.qrcode.R
-import com.example.qrcode.common.Status
 import com.example.qrcode.databinding.ActivityMainBinding
 import com.example.qrcode.presentation.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint

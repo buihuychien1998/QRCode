@@ -37,13 +37,17 @@
     <string name="clear_history_title">Clear history</string>
     <string name="clear_history_message">Do you want to clear all histories?</string>
     <string name="about_title">About</string>
-    <string name="about_message">Version: %s\nDevelop by Demon King</string>
+    <string name="about_message">Version: %s\nDevelop by Ace</string>
     <string name="permission_not_enough_message">At least one of the permissions was not granted, launching again…</string>
     <string name="admob_app_id">ca-app-pub-2470081383656893~8205045732</string>
     <string name="banner_ad_unit_id">ca-app-pub-2470081383656893/7408142849</string>
     <string name="full_sceen_ad_unit_id">ca-app-pub-2470081383656893/6610152217</string>
-    <string name="enter_text">Enter text:</string>
+    <string name="enter_text">Enter text (*):</string>
     <string name="text_require">Text is required</string>
     <string name="counter_text">%d/255</string>
     <string name="default_counter_text">0/255</string>
+    <string name="logo">Logo (Optional):</string>
+    <string name="setting_language">Language:</string>
+    <string name="text_english">English</string>
+    <string name="text_vietnamese">Vietnamese</string>
 </resources>

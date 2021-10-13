@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="color_text_default">#808080</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="brown">#CD853F</color>
     <color name="color_toolbar">#040727</color>
     <color name="color_icon">#FF6200EE</color>
     <color name="color_text">#FF6929</color>

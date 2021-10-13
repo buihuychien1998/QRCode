@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:background="@color/brown"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:src="@drawable/ic_launch"
+        android:layout_width="@dimen/image_size"
+        android:layout_height="match_parent"/>
+    <TextView
+        android:fontFamily="@font/pf_beausanspro_bold"
+        android:textSize="@dimen/text_size_big"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:text="QR Code"
+        android:layout_width="@dimen/image_size"
+        android:layout_height="match_parent"/>
+</LinearLayout>

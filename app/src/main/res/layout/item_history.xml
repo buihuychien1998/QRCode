@@ -62,8 +62,7 @@
                 android:layout_width="@dimen/image_qr_code_size"
                 android:layout_height="@dimen/image_qr_code_size"
                 android:layout_margin="@dimen/margin_small"
-                android:src="@drawable/ic_qr_code"
-                app:tint="@color/black" />
+                android:src="@drawable/ic_item_history"/>
 
             <TextView
                 android:id="@+id/tvHistory"

@@ -71,6 +71,22 @@
             android:layout_marginTop="@dimen/margin_small"
             android:layout_marginEnd="@dimen/margin_extra"
             android:text="@string/default_counter_text"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_extra"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:text="@string/logo" />
 
+        <ImageView
+            android:background="?attr/selectableItemBackground"
+            android:src="@drawable/ic_add_a_photo"
+            android:id="@+id/ivLogo"
+            android:layout_width="@dimen/image_size"
+            android:layout_height="@dimen/image_size"
+            android:layout_marginHorizontal="@dimen/margin_extra"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_gravity="center_horizontal"
+            android:inputType="textMultiLine" />
     </LinearLayout>
 </layout>

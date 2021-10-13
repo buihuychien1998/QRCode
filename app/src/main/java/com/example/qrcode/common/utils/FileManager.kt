@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.ContentUris
 import android.content.Context
 import android.database.Cursor
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
@@ -12,6 +13,7 @@ import android.provider.MediaStore
 import androidx.loader.content.CursorLoader
 import dagger.hilt.android.qualifiers.ApplicationContext
 import timber.log.Timber
+import java.io.ByteArrayOutputStream
 import java.io.File
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -216,6 +218,13 @@ class FileManager @Inject constructor(@ApplicationContext private var context: C
 
     fun isExistsFile(pathOfImage: String?) = if(pathOfImage != null) File(pathOfImage).exists() else false
 
+    fun getImageUri(inImage: Bitmap, title: String): Uri? {
+        val bytes = ByteArrayOutputStream()
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path =
+            MediaStore.Images.Media.insertImage(context?.contentResolver, inImage, title, null)
+        return Uri.parse(path)
+    }
 
     private val K: Long = 1000 // 1KB
 

@@ -3,11 +3,9 @@ package com.example.qrcode.common
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.SharedPreferencesMigration
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.emptyPreferences
+import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.preferencesDataStore
+import com.example.qrcode.common.utils.Languages
 import com.example.qrcode.datastore.PrefsStore
 import com.example.qrcode.presentation.ui.main.setting.SettingPreferences
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -18,10 +16,6 @@ import java.io.IOException
 import javax.inject.Inject
 
 private const val SETTING_PREFERENCES_NAME = "user_preferences"
-val SOUND = "SOUND"
-val VIBRATE = "VIBRATE"
-val SAVE_HISTORY = "SAVE_HISTORY"
-val REMOVE_ADS = "REMOVE_ADS"
 
 //val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = DATA_STORE_NAME)
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
@@ -38,6 +32,7 @@ object PreferencesKeys {
     val VIBRATE = booleanPreferencesKey("VIBRATE")
     val SAVE_HISTORY = booleanPreferencesKey("SAVE_HISTORY")
     val REMOVE_ADS = booleanPreferencesKey("REMOVE_ADS")
+    val LANGUAGES = stringPreferencesKey("LANGUAGES")
 }
 
 class DataStoreHelper @Inject constructor(
@@ -68,6 +63,38 @@ class DataStoreHelper @Inject constructor(
         context.dataStore.edit { preferences ->
             // Get the current SortOrder as an enum
             preferences[key] = enable
+        }
+    }
+
+    override suspend fun changeLanguage(lang: String) {
+        // edit handles data transactionally, ensuring that if the sort is updated at the same
+        // time from another thread, we won't have conflicts
+        context.dataStore.setValue(PreferencesKeys.LANGUAGES, lang)
+    }
+
+    override fun getLanguage(): Flow<String> {
+        return context.dataStore.getValueFlow(PreferencesKeys.LANGUAGES, Languages.DEFAULT)
+    }
+
+    override fun <T> DataStore<Preferences>.getValueFlow(
+        key: Preferences.Key<T>,
+        defaultValue: T
+    ): Flow<T> {
+        return this.data
+            .catch { exception ->
+                if (exception is IOException) {
+                    emit(emptyPreferences())
+                } else {
+                    throw exception
+                }
+            }.map { preferences ->
+                preferences[key] ?: defaultValue
+            }
+    }
+
+    override suspend fun <T> DataStore<Preferences>.setValue(key: Preferences.Key<T>, value: T) {
+        this.edit { preferences ->
+            preferences[key] = value
         }
     }
 }

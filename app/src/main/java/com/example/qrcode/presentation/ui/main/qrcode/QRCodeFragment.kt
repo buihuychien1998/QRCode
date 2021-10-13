@@ -1,14 +1,18 @@
 package com.example.qrcode.presentation.ui.main.qrcode
 
+import android.content.Intent
 import android.graphics.*
+import android.net.Uri
 import android.view.View
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.qrcode.R
+import com.example.qrcode.common.SHARE_FILE
 import com.example.qrcode.common.Status
-import com.example.qrcode.common.utils.createShareIntent
 import com.example.qrcode.common.widget.SwipeSimpleCallback
 import com.example.qrcode.databinding.FragmentQRCodeBinding
 import com.example.qrcode.model.entity.Barcode
@@ -16,6 +20,9 @@ import com.example.qrcode.presentation.base.BaseFragment
 import com.example.qrcode.presentation.ui.main.MainActivity
 import com.example.qrcode.presentation.ui.main.create.CreateFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import timber.log.Timber
+import java.util.*
 
 
 @AndroidEntryPoint
@@ -27,6 +34,18 @@ class QRCodeFragment : BaseFragment<FragmentQRCodeBinding, QRCodeViewModel>() {
     }
 
     private lateinit var qrCodeAdapter: QRCodeAdapter
+    var imageUri: Uri? = null
+    var resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            lifecycleScope.launch {
+                viewModel.deleteBitmap(activity?.contentResolver, imageUri)
+            }
+//            if (result.resultCode == Activity.RESULT_OK) {
+//                // There are no request codes
+//                val data: Intent? = result.data
+//
+//            }
+        }
 
     override val layoutId: Int
         get() = R.layout.fragment_q_r_code
@@ -42,7 +61,7 @@ class QRCodeFragment : BaseFragment<FragmentQRCodeBinding, QRCodeViewModel>() {
 
     private fun initQRCode() {
         qrCodeAdapter = QRCodeAdapter()
-        qrCodeAdapter.itemClickListener = object: QRCodeAdapter.ItemClickListener{
+        qrCodeAdapter.itemClickListener = object : QRCodeAdapter.ItemClickListener {
             override fun onItemClickListener(barcode: Barcode?) {
                 openCreateBarcodeScreen(barcode)
             }
@@ -55,8 +74,23 @@ class QRCodeFragment : BaseFragment<FragmentQRCodeBinding, QRCodeViewModel>() {
                 if (swipeDir == ItemTouchHelper.LEFT) {
                     viewModel.delete(qrCodeAdapter.getQRCode(position))
                 } else {
-                    context.createShareIntent(qrCodeAdapter.getQRCode(position).qrCode)
-                    qrCodeAdapter.notifyItemChanged(position)
+                    val title = SHARE_FILE
+                    val image = qrCodeAdapter.getQRCode(position).image
+                    if (image == null) {
+                        showToast(R.string.error_message)
+                        qrCodeAdapter.notifyItemChanged(position)
+                        return
+                    }
+                    lifecycleScope.launch {
+                        val path = viewModel.insertBitmap(activity?.contentResolver, image, title)
+                        Timber.d("Image path: $path")
+                        imageUri = Uri.parse(path)
+                        val share = Intent(Intent.ACTION_SEND)
+                        share.type = "image/jpeg"
+                        share.putExtra(Intent.EXTRA_STREAM, imageUri)
+                        resultLauncher.launch(Intent.createChooser(share, "Share"))
+                        qrCodeAdapter.notifyItemChanged(position)
+                    }
                 }
             }
         }
@@ -93,12 +127,17 @@ class QRCodeFragment : BaseFragment<FragmentQRCodeBinding, QRCodeViewModel>() {
                 Status.LOADING -> {
                     showProgressDialog(R.string.loading_message)
                 }
+
             }
         })
         viewModel.qrCodeDeleteResult.observe(viewLifecycleOwner) { result ->
+            if (result == null) {
+                return@observe
+            }
             when (result.status) {
                 Status.SUCCESS -> {
                     dismissProgressDialog()
+                    viewModel.clearData()
                     result.data?.let { data ->
                         if (data >= 0) {
                             showToast(R.string.deleted)
@@ -110,13 +149,33 @@ class QRCodeFragment : BaseFragment<FragmentQRCodeBinding, QRCodeViewModel>() {
                 Status.ERROR -> {
                     dismissProgressDialog()
                     showToast(R.string.error_message)
+                    viewModel.clearData()
                 }
                 Status.LOADING -> {
                     showProgressDialog(R.string.loading_message)
                 }
             }
         }
+        viewModel.insertImageResult.observe(viewLifecycleOwner) { result ->
+            if (result == null) {
+                return@observe
+            }
+            when (result.status) {
+                Status.SUCCESS -> {
+                    dismissProgressDialog()
+                    viewModel.clearData()
+                }
+                Status.ERROR -> {
+                    dismissProgressDialog()
+                    showToast(R.string.error_message)
+                    viewModel.clearData()
+                }
+                Status.LOADING -> {
+                    showProgressDialog(R.string.loading_message)
+                }
 
+            }
+        }
     }
 
     override fun initListeners() {

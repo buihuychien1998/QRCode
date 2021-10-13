@@ -130,7 +130,7 @@ class ScanFragment : BaseFragment<FragmentScanBinding, ScanViewModel>() {
                     viewBinding.ivScan.setColorFilter(
                         ContextCompat.getColor(
                             requireContext(),
-                            R.color.color_text
+                            R.color.color_icon
                         ), PorterDuff.Mode.MULTIPLY
                     )
                     shouldScan = true
@@ -185,9 +185,23 @@ class ScanFragment : BaseFragment<FragmentScanBinding, ScanViewModel>() {
     }
 
     override fun initViews() {
+        initFlash()
         handlePermission()
         loadBanner()
         loadAd()
+    }
+
+    private fun initFlash() {
+        val camManager = context?.getSystemService(Context.CAMERA_SERVICE) as CameraManager
+        val cameraId = camManager.cameraIdList[0]
+        val camChars = camManager.getCameraCharacteristics(cameraId)
+
+        isFlashSupported = camChars.get(CameraCharacteristics.FLASH_INFO_AVAILABLE)
+        if (isFlashSupported == true) {
+            viewBinding.btnFlash.visibility = View.VISIBLE
+            return
+        }
+        viewBinding.btnFlash.visibility = View.GONE
     }
 
     private fun loadBanner() {
@@ -197,7 +211,8 @@ class ScanFragment : BaseFragment<FragmentScanBinding, ScanViewModel>() {
         }
         MobileAds.initialize(requireContext()) { }
         val configuration = RequestConfiguration.Builder()
-            .setTestDeviceIds(Arrays.asList("735489F18FFFC3A3B7C3E29C48E6589C")).build()
+//            .setTestDeviceIds(Arrays.asList("735489F18FFFC3A3B7C3E29C48E6589C"))
+            .build()
         MobileAds.setRequestConfiguration(configuration)
         val adRequest =
             AdRequest.Builder().build()
@@ -296,8 +311,8 @@ class ScanFragment : BaseFragment<FragmentScanBinding, ScanViewModel>() {
             viewBinding.ivScan.setColorFilter(
                 ContextCompat.getColor(
                     requireContext(),
-                    R.color.color_icon
-                ), PorterDuff.Mode.MULTIPLY
+                    R.color.white
+                ), PorterDuff.Mode.SRC_ATOP
             )
         }
     }
@@ -359,6 +374,7 @@ class ScanFragment : BaseFragment<FragmentScanBinding, ScanViewModel>() {
             Status.LOADING -> {
                 showProgressDialog(R.string.loading_message)
             }
+
         }
 
     }
@@ -417,16 +433,6 @@ class ScanFragment : BaseFragment<FragmentScanBinding, ScanViewModel>() {
     }
 
     private fun switchFlash() {
-        val camManager = context?.getSystemService(Context.CAMERA_SERVICE) as CameraManager
-        val cameraId = camManager.cameraIdList[0]
-        val camChars = camManager.getCameraCharacteristics(cameraId)
-
-        isFlashSupported = camChars.get(CameraCharacteristics.FLASH_INFO_AVAILABLE)
-        if (isFlashSupported == false) {
-            showToast(R.string.flash_not_available)
-            return
-        }
-
         initCamera()
         camera?.let { cam ->
             try {
@@ -436,10 +442,20 @@ class ScanFragment : BaseFragment<FragmentScanBinding, ScanViewModel>() {
                 cam.parameters = param
                 isTorchOn = !isTorchOn
                 if (isTorchOn) {
-                    showToast(R.string.flash_switched_on)
+                    viewBinding.btnFlash.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            requireContext(),
+                            R.drawable.ic_flash_on
+                        )
+                    )
                     return
                 }
-                showToast(R.string.flash_switched_off)
+                viewBinding.btnFlash.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.ic_flash_off
+                    )
+                )
 
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -461,7 +477,9 @@ class ScanFragment : BaseFragment<FragmentScanBinding, ScanViewModel>() {
             if (field.type === Camera::class.java) {
                 field.isAccessible = true
                 try {
-                    return field.get(cameraSource) as Camera
+                    field.get(cameraSource)?.let {
+                        return it as Camera
+                    }
                 } catch (e: IllegalAccessException) {
                     e.printStackTrace()
                 }

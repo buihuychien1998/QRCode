@@ -1,9 +1,13 @@
 package com.example.qrcode.presentation.ui.main.setting
 
+import android.content.Context.MODE_PRIVATE
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import com.example.qrcode.R
+import com.example.qrcode.common.LANGUAGE
 import com.example.qrcode.common.PreferencesKeys
+import com.example.qrcode.common.SHARED_PREFERENCE_LANGUAGE
+import com.example.qrcode.common.utils.Languages
 import com.example.qrcode.databinding.FragmentSettingBinding
 import com.example.qrcode.presentation.base.BaseFragment
 import com.example.qrcode.presentation.ui.main.MainActivity
@@ -26,6 +30,14 @@ class SettingFragment : BaseFragment<FragmentSettingBinding, SettingViewModel>()
 
     override fun initViews() {
         handleOnBackPress()
+        val mSp = activity?.getSharedPreferences(SHARED_PREFERENCE_LANGUAGE, MODE_PRIVATE)
+        val lang = mSp?.getString(LANGUAGE, Languages.DEFAULT)
+        when (lang) {
+            Languages.VIETNAMESE -> {
+                viewBinding.rbVietnamese.isChecked = true
+            }
+            else -> viewBinding.rbEnglish.isChecked = true
+        }
     }
 
     private fun handleOnBackPress() {
@@ -51,6 +63,14 @@ class SettingFragment : BaseFragment<FragmentSettingBinding, SettingViewModel>()
             viewBinding.swSaveHistory.isChecked = it.saveHistory
             viewBinding.swRemoveAds.isChecked = it.removeAds
         }
+//        viewModel.language.observe(viewLifecycleOwner){
+//            when (it) {
+//                Languages.VIETNAMESE -> {
+//                    viewBinding.rbVietnamese.isChecked = true
+//                }
+//                else -> viewBinding.rbEnglish.isChecked = true
+//            }
+//        }
     }
 
     override fun initListeners() {
@@ -59,6 +79,8 @@ class SettingFragment : BaseFragment<FragmentSettingBinding, SettingViewModel>()
         viewBinding.swVibrate.setOnClickListener(this)
         viewBinding.swSaveHistory.setOnClickListener(this)
         viewBinding.swRemoveAds.setOnClickListener(this)
+        viewBinding.rbEnglish.setOnClickListener(this)
+        viewBinding.rbVietnamese.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -82,11 +104,40 @@ class SettingFragment : BaseFragment<FragmentSettingBinding, SettingViewModel>()
                 val removeAds = viewBinding.swRemoveAds.isChecked
                 viewModel.enableSetting(PreferencesKeys.REMOVE_ADS, removeAds)
             }
+            R.id.rbEnglish -> {
+                val mSp = activity?.getSharedPreferences(SHARED_PREFERENCE_LANGUAGE, MODE_PRIVATE)
+                val storedLang = mSp?.getString(LANGUAGE, Languages.DEFAULT)
+                if(Languages.DEFAULT.equals(storedLang)){
+                    return
+                }
+                changeLanguage(Languages.DEFAULT)
+                activity?.recreate()
+//                activity?.refreshLayout()
+//                context?.changeLanguage(Languages.DEFAULT)
+            }
+            R.id.rbVietnamese -> {
+                val mSp = activity?.getSharedPreferences(SHARED_PREFERENCE_LANGUAGE, MODE_PRIVATE)
+                val storedLang = mSp?.getString(LANGUAGE, Languages.DEFAULT)
+                if(Languages.VIETNAMESE.equals(storedLang)){
+                    return
+                }
+                changeLanguage(Languages.VIETNAMESE)
+                activity?.recreate()
+//                activity?.refreshLayout()
+//                context?.changeLanguage(Languages.VIETNAMESE)
+            }
         }
     }
 
     private fun handleBackEvent() {
         sharedViewModel.enableQRDetect(true)
         (requireActivity() as MainActivity).popFragment(SettingFragment::class.java.simpleName)
+    }
+
+    private fun changeLanguage(@Languages lang: String){
+        val mSp = activity?.getSharedPreferences(SHARED_PREFERENCE_LANGUAGE, MODE_PRIVATE)
+        val editor = mSp?.edit()
+        editor?.putString(LANGUAGE, lang)
+        editor?.apply()
     }
 }

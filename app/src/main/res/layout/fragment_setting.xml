@@ -132,5 +132,34 @@
                 android:thumb="@drawable/custom_thumb"
                 app:track="@drawable/custom_track" />
         </FrameLayout>
+
+        <RadioGroup
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_medium">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting_language"
+                android:padding="@dimen/padding_medium"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size_regular" />
+
+            <RadioButton
+                android:id="@+id/rbEnglish"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_english"
+                android:textSize="@dimen/text_size_regular" />
+
+            <RadioButton
+                android:id="@+id/rbVietnamese"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_vietnamese"
+                android:textSize="@dimen/text_size_regular" />
+        </RadioGroup>
     </LinearLayout>
 </layout>

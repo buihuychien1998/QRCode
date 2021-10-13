@@ -8,12 +8,28 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/CH Play/QRCode/app/src/main/res/drawable/bg_scan.xml" value="0.20833333333333334" />
+        <entry key="..\:/CH Play/QRCode/app/src/main/res/drawable/bg_splash.xml" value="0.20833333333333334" />
+        <entry key="..\:/CH Play/QRCode/app/src/main/res/drawable/bg_tv_create.xml" value="0.20833333333333334" />
+        <entry key="..\:/CH Play/QRCode/app/src/main/res/drawable/bg_tv_create_tool.xml" value="0.20833333333333334" />
+        <entry key="..\:/CH Play/QRCode/app/src/main/res/drawable/border_gallery.xml" value="0.20833333333333334" />
+        <entry key="..\:/CH Play/QRCode/app/src/main/res/drawable/circular_progress_bar_sc.xml" value="0.20833333333333334" />
+        <entry key="..\:/CH Play/QRCode/app/src/main/res/drawable/custom_track.xml" value="0.20833333333333334" />
+        <entry key="..\:/CH Play/QRCode/app/src/main/res/drawable/ic_add_a_photo.xml" value="0.20833333333333334" />
+        <entry key="..\:/CH Play/QRCode/app/src/main/res/drawable/ic_flash.xml" value="0.20833333333333334" />
+        <entry key="..\:/CH Play/QRCode/app/src/main/res/drawable/ic_gallery.xml" value="0.20833333333333334" />
+        <entry key="..\:/CH Play/QRCode/app/src/main/res/drawable/ic_history.xml" value="0.20833333333333334" />
+        <entry key="..\:/CH Play/QRCode/app/src/main/res/drawable/ic_splash_screen.xml" value="0.20833333333333334" />
         <entry key="..\:/CH Play/QRCode/app/src/main/res/layout/activity_gallery.xml" value="0.1" />
         <entry key="..\:/CH Play/QRCode/app/src/main/res/layout/activity_main.xml" value="0.1213768115942029" />
         <entry key="..\:/CH Play/QRCode/app/src/main/res/layout/activity_splash.xml" value="0.10144927536231885" />
         <entry key="..\:/CH Play/QRCode/app/src/main/res/layout/custom_barcode_scanner.xml" value="0.1" />
-        <entry key="..\:/CH Play/QRCode/app/src/main/res/layout/fragment_scan.xml" value="0.1308876811594203" />
+        <entry key="..\:/CH Play/QRCode/app/src/main/res/layout/fragment_create.xml" value="0.22" />
+        <entry key="..\:/CH Play/QRCode/app/src/main/res/layout/fragment_scan.xml" value="0.25" />
+        <entry key="..\:/CH Play/QRCode/app/src/main/res/layout/fragment_setting.xml" value="0.21" />
         <entry key="..\:/CH Play/QRCode/app/src/main/res/layout/fragment_zxing.xml" value="0.1308876811594203" />
+        <entry key="..\:/CH Play/QRCode/app/src/main/res/layout/item_history.xml" value="0.22" />
+        <entry key="..\:/CH Play/QRCode/app/src/main/res/layout/test.xml" value="0.25" />
       </map>
     </option>
   </component>

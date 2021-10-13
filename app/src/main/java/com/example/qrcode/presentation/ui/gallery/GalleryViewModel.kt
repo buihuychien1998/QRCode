@@ -7,12 +7,14 @@ import android.text.TextUtils
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.qrcode.common.utils.FileManager
 import com.example.qrcode.common.ResultWrapper
+import com.example.qrcode.common.utils.FileManager
 import com.example.qrcode.model.GalleryItem
 import com.example.qrcode.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
@@ -83,7 +85,6 @@ class GalleryViewModel @Inject constructor(var fileManager: FileManager): BaseVi
     fun getImages(contentResolver: ContentResolver?) {
         viewModelScope.launch(exceptionHandler + Dispatchers.IO) {
             imagesLiveData.postValue(ResultWrapper.loading())
-            delay(500L)
             val data = queryFromGallery(contentResolver)
             imagesLiveData.postValue(ResultWrapper.success(data))
         }

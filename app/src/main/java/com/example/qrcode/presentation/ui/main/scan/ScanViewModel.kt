@@ -17,8 +17,7 @@ import javax.inject.Inject
 class ScanViewModel @Inject constructor(
     private val historyRepository: HistoryRepository,
     prefsStore: PrefsStore
-) :
-    BaseViewModel() {
+) : BaseViewModel() {
     val setting = prefsStore.getSetting().asLiveData()
     private val _historyInsertResult = MutableLiveData<ResultWrapper<Long>>()
     val historyInsertResult: LiveData<ResultWrapper<Long>>

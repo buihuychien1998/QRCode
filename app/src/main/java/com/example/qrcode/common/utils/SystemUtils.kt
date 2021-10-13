@@ -1,11 +1,11 @@
 package com.example.qrcode.common.utils
 
+import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
@@ -13,10 +13,12 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.provider.MediaStore
 import android.provider.Settings
-import androidx.core.content.ContextCompat
 import com.example.qrcode.R
 import com.example.qrcode.common.LABEL_CLIPBOARD
+import com.example.qrcode.presentation.service.RingtonePlayingService
+import com.example.qrcode.presentation.service.RingtonePlayingService.Companion.KEY_RINGTONE_URI
 import java.io.ByteArrayOutputStream
+import java.util.*
 
 
 fun Context.vibrate() {
@@ -33,13 +35,26 @@ fun Context.vibrate() {
 fun Context.ring() {
     val notification =
         RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-    val soundUri = Uri.parse(
-        "android.resource://"
-                + packageName + "/" + R.raw.custom_sound
-    )
-//    val ring = RingtoneManager.getRingtone(this, notification)
-    val ring = RingtoneManager.getRingtone(this, soundUri)
-    ring.play()
+//    val soundUri = Uri.parse(
+//        "android.resource://"
+//                + packageName + "/" + R.raw.custom_sound
+//    )
+    val uriString = "android.resource://" + packageName + "/" + R.raw.facebook_message_sound
+//    val ring = RingtoneManager.getRingtone(this, soundUri)
+//    ring.play()
+    stopRingtone()
+    startRingtone(uriString)
+}
+
+fun Context.startRingtone(ringtoneUri: String?) {
+    val startIntent = Intent(this, RingtonePlayingService::class.java)
+    startIntent.putExtra(KEY_RINGTONE_URI, ringtoneUri)
+    startService(startIntent)
+}
+
+fun Context.stopRingtone() {
+    val stopIntent = Intent(this, RingtonePlayingService::class.java)
+    stopService(stopIntent)
 }
 
 fun Context.copy(value: String?) {
@@ -68,13 +83,49 @@ fun Context.createShareIntent(text: String?) {
     startActivity(intent)
 }
 
-fun Context.shareBitmap(b: Bitmap?){
+fun Context.shareBitmap(b: Bitmap?, title: String) {
     val share = Intent(Intent.ACTION_SEND)
     share.type = "image/jpeg"
     val bytes = ByteArrayOutputStream()
     b?.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-    val path = MediaStore.Images.Media.insertImage(contentResolver, b, "Title", null)
+    val path = MediaStore.Images.Media.insertImage(contentResolver, b, title, null)
     val imageUri = Uri.parse(path)
     share.putExtra(Intent.EXTRA_STREAM, imageUri)
     startActivity(Intent.createChooser(share, "Share"))
+}
+
+fun Context.changeLanguage(lang: String) {
+    val config = resources.configuration
+    val locale = Locale(lang)
+    Locale.setDefault(locale)
+    config.setLocale(locale)
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+        createConfigurationContext(config)
+//        triggerRebirth()
+//        val intent = Intent(this, MainActivity::class.java)
+//        startActivity(intent)
+        return
+    }
+    resources.updateConfiguration(config, resources.displayMetrics)
+//    triggerRebirth()
+//    val intent = Intent(this, MainActivity::class.java)
+//    startActivity(intent)
+}
+
+fun Context.triggerRebirth() {
+    val intent = packageManager.getLaunchIntentForPackage(packageName)
+    val componentName = intent?.component
+    val mainIntent = Intent.makeRestartActivityTask(componentName)
+    startActivity(mainIntent)
+    Runtime.getRuntime().exit(0)
+}
+
+fun Activity.refreshLayout() {
+    val intent = getIntent()
+    overridePendingTransition(0, 0)
+    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+    finish()
+    overridePendingTransition(0, 0)
+    startActivity(intent)
 }

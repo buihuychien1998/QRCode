@@ -71,6 +71,7 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, HistoryViewModel>()
                 Status.LOADING -> {
                     showProgressDialog(R.string.loading_message)
                 }
+
             }
         })
         viewModel.historyDeleteResult.observe(viewLifecycleOwner, { result ->
@@ -93,6 +94,7 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, HistoryViewModel>()
                 Status.LOADING -> {
                     showProgressDialog(R.string.loading_message)
                 }
+
             }
 
         })
@@ -116,6 +118,7 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding, HistoryViewModel>()
                 Status.LOADING -> {
                     showProgressDialog(R.string.loading_message)
                 }
+
             }
 
         })
